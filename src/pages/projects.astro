@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+
+const projects = [
+  {
+    name: 'llm memory',
+    note: 'a model-agnostic memory layer for llms — what to retain, retrieve and expire over long horizons.',
+    href: null,
+  },
+  {
+    name: 'kv cache',
+    note: null,
+    href: null,
+  },
+];
+---
+
+<Base title="projects" description="Things Sourabh Sahoo is building.">
+  {projects.map((p) => (
+    <section>
+      <div class="row">
+        {p.href ? <a href={p.href}>{p.name}</a> : <span>{p.name}</span>}
+        {!p.href && <span class="date">wip</span>}
+      </div>
+      {p.note && <div class="muted">{p.note}</div>}
+    </section>
+  ))}
+</Base>

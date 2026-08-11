@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+
+const { title, description = 'Sourabh Sahoo — senior product + AI engineer.' } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const links = [
+  { href: '/', label: 'home', key: 'h' },
+  { href: '/blog/research', label: 'blog', key: 'b', match: '/blog' },
+  { href: '/work', label: 'work', key: 'w' },
+  { href: '/projects', label: 'projects', key: 'p' },
+  { href: '/resume', label: 'resume', key: 'r' },
+];
+
+const isCurrent = (l) => (l.match ? path.startsWith(l.match) : path === l.href);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title ? `${title} — sourabh sahoo` : 'sourabh sahoo'}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <script is:inline>
+      const saved = localStorage.getItem('theme');
+      if (saved) document.documentElement.setAttribute('data-theme', saved);
+    </script>
+  </head>
+  <body>
+    <div class="wrap">
+      <nav class="top">
+        {links.map((l) => (
+          <a href={l.href} aria-current={isCurrent(l) ? 'page' : undefined}>
+            {l.label} <kbd>[{l.key}]</kbd>
+          </a>
+        ))}
+        <button class="theme" id="theme" aria-label="Toggle colour theme">[t]</button>
+      </nav>
+
+      <main>
+        <slot />
+      </main>
+
+      <footer class="elsewhere">
+        <a href="https://github.com/sourabhsahoo10">github</a>
+        <a href="https://www.linkedin.com/in/sourabhsahoo/">linkedin</a>
+      </footer>
+    </div>
+
+    <script is:inline define:vars={{ links }}>
+      const toggle = () => {
+        const root = document.documentElement;
+        const dark = getComputedStyle(root).getPropertyValue('--bg').trim() === '#111110';
+        const next = dark ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      };
+
+      document.getElementById('theme').addEventListener('click', toggle);
+
+      const map = Object.fromEntries(links.map((l) => [l.key, l.href]));
+
+      document.addEventListener('keydown', (e) => {
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        const tag = e.target.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
+        const key = e.key.toLowerCase();
+        if (key === 't') return toggle();
+        if (map[key]) window.location.href = map[key];
+      });
+    </script>
+  </body>
+</html>

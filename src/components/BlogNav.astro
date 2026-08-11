@@ -1,0 +1,15 @@
+---
+const path = Astro.url.pathname;
+const tabs = [
+  { href: '/blog/research', label: 'research' },
+  { href: '/blog/currently', label: 'currently' },
+];
+---
+
+<nav class="sub">
+  {tabs.map((t) => (
+    <a href={t.href} aria-current={path.startsWith(t.href) ? 'page' : undefined}>
+      {t.label}
+    </a>
+  ))}
+</nav>

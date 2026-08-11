@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('research', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date - a.data.date)
+  .slice(0, 3);
+
+const fmt = (d) =>
+  d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' }).toLowerCase();
+---
+
+<Base>
+  <section>
+    <h1>sourabh sahoo</h1>
+    <p class="muted">
+      senior product + ai engineer at macrox. i like exploring the frontier of
+      technology, experimenting with new tools, and building my own versions of
+      things.
+    </p>
+  </section>
+
+  <section>
+    <div class="label">research</div>
+    {posts.map((p) => (
+      <div class="row">
+        <a href={`/blog/research/${p.id}`}>{p.data.title}</a>
+        <span class="date">{fmt(p.data.date)}</span>
+      </div>
+    ))}
+  </section>
+
+  <section>
+    <div class="label">currently</div>
+    <div class="row"><span><span class="muted">building</span> llm memory</span></div>
+    <div class="row"><span><span class="muted">reading</span> —</span></div>
+  </section>
+
+  <section>
+    <div class="label">work</div>
+    <div class="row">
+      <span>senior product engineer <span class="muted">macrox</span></span>
+      <span class="date">2025 —</span>
+    </div>
+    <div class="row">
+      <span>data scientist <span class="muted">macrox</span></span>
+      <span class="date">2023 — 25</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">projects</div>
+    <div class="row"><span>llm memory</span></div>
+    <div class="row"><span>kv cache</span></div>
+  </section>
+</Base>
