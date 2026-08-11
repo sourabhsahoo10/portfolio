@@ -1,28 +1,30 @@
 ---
 import Base from '../../layouts/Base.astro';
 import BlogNav from '../../components/BlogNav.astro';
-
-const updated = 'august 2026';
+import Section from '../../components/Section.astro';
 ---
 
-<Base title="currently" description="What Sourabh is working on, reading and experimenting with right now.">
-  <BlogNav />
+<Base title="Currently" description="What Sourabh is working on, reading and experimenting with right now.">
+  <header class="intro">
+    <h1><span class="star">*</span>currently</h1>
+    <BlogNav />
+  </header>
 
-  <section>
-    <div class="label">building</div>
-    <div>llm memory — a model-agnostic memory layer for llms</div>
-    <div>kv cache</div>
-  </section>
+  <Section title="building">
+    <div class="row">
+      <span class="item-title">llm memory</span>
+    </div>
+    <div class="muted">a model-agnostic memory layer for llms.</div>
+    <div class="row">
+      <span class="item-title">kv cache</span>
+    </div>
+  </Section>
 
-  <section>
-    <div class="label">reading</div>
-    <div class="muted">—</div>
-  </section>
+  <Section title="reading">
+    <div class="faint">—</div>
+  </Section>
 
-  <section>
-    <div class="label">experimenting with</div>
-    <div class="muted">—</div>
-  </section>
-
-  <p class="faint">last updated {updated}</p>
+  <Section title="experimenting">
+    <div class="faint">—</div>
+  </Section>
 </Base>

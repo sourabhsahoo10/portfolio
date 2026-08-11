@@ -8,18 +8,22 @@ const posts = (await getCollection('research', ({ data }) => !data.draft)).sort(
 );
 
 const fmt = (d) =>
-  d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' }).toLowerCase();
+  d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toLowerCase();
 ---
 
-<Base title="research" description="Finished writing.">
-  <BlogNav />
+<Base title="Research" description="Writing by Sourabh Sahoo.">
+  <header class="intro">
+    <h1><span class="star">*</span>research</h1>
+    <BlogNav />
+  </header>
 
-  {posts.length === 0 && <p class="muted">nothing published yet.</p>}
-
-  {posts.map((p) => (
-    <div class="row">
-      <a href={`/blog/research/${p.id}`}>{p.data.title}</a>
-      <span class="date">{fmt(p.data.date)}</span>
-    </div>
-  ))}
+  <section>
+    {posts.length === 0 && <div class="faint">nothing published yet.</div>}
+    {posts.map((p) => (
+      <div class="row">
+        <a class="item-title" href={`/blog/research/${p.id}`}>{p.data.title}</a>
+        <span class="date">{fmt(p.data.date)}</span>
+      </div>
+    ))}
+  </section>
 </Base>

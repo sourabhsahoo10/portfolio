@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
 
 const projects = [
   {
@@ -7,22 +8,21 @@ const projects = [
     note: 'a model-agnostic memory layer for llms — what to retain, retrieve and expire over long horizons.',
     href: null,
   },
-  {
-    name: 'kv cache',
-    note: null,
-    href: null,
-  },
+  { name: 'kv cache', note: null, href: null },
 ];
 ---
 
-<Base title="projects" description="Things Sourabh Sahoo is building.">
+<Base title="Projects" description="Things Sourabh Sahoo is building.">
+  <header class="intro">
+    <h1><span class="star">*</span>projects</h1>
+  </header>
+
   {projects.map((p) => (
-    <section>
-      <div class="row">
-        {p.href ? <a href={p.href}>{p.name}</a> : <span>{p.name}</span>}
-        {!p.href && <span class="date">wip</span>}
-      </div>
+    <Section title={p.name}>
       {p.note && <div class="muted">{p.note}</div>}
-    </section>
+      <div class="row">
+        {p.href ? <a class="accent" href={p.href}>source ↗</a> : <span class="faint">wip</span>}
+      </div>
+    </Section>
   ))}
 </Base>

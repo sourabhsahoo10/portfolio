@@ -10,19 +10,20 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-const fmt = post.data.date.toLocaleDateString('en-US', {
-  month: 'short',
-  day: 'numeric',
-  year: 'numeric',
-}).toLowerCase();
+const fmt = post.data.date
+  .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  .toLowerCase();
 ---
 
 <Base title={post.data.title} description={post.data.summary}>
+  <header class="intro">
+    <h1><span class="star">*</span>{post.data.title}</h1>
+    <p class="faint">{fmt}</p>
+  </header>
+
   <article>
-    <h1>{post.data.title}</h1>
-    <p class="date faint">{fmt}</p>
     <Content />
   </article>
 
-  <p style="margin-top:2.5rem"><a href="/blog/research">← research</a></p>
+  <p style="margin-top:3rem"><a class="accent" href="/blog/research">← research</a></p>
 </Base>

@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('research', ({ data }) => !data.draft))
@@ -7,50 +8,58 @@ const posts = (await getCollection('research', ({ data }) => !data.draft))
   .slice(0, 3);
 
 const fmt = (d) =>
-  d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' }).toLowerCase();
+  d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toLowerCase();
 ---
 
 <Base>
-  <section>
+  <header class="intro">
     <h1>sourabh sahoo</h1>
     <p class="muted">
-      senior product + ai engineer at macrox. i like exploring the frontier of
-      technology, experimenting with new tools, and building my own versions of
-      things.
+      senior product + ai engineer at <span class="accent">macrox</span>.
     </p>
-  </section>
+    <p class="muted">
+      i like exploring the frontier of technology, experimenting with new tools,
+      and building my own versions of things.
+    </p>
+  </header>
 
-  <section>
-    <div class="label">research</div>
+  <Section title="blog">
     {posts.map((p) => (
       <div class="row">
-        <a href={`/blog/research/${p.id}`}>{p.data.title}</a>
+        <a class="item-title" href={`/blog/research/${p.id}`}>{p.data.title}</a>
         <span class="date">{fmt(p.data.date)}</span>
       </div>
     ))}
-  </section>
+  </Section>
 
-  <section>
-    <div class="label">currently</div>
-    <div class="row"><span><span class="muted">building</span> llm memory</span></div>
-    <div class="row"><span><span class="muted">reading</span> —</span></div>
-  </section>
-
-  <section>
-    <div class="label">work</div>
+  <Section title="currently">
     <div class="row">
-      <span>senior product engineer <span class="muted">macrox</span></span>
+      <span><span class="muted">building</span> <span class="item-title">llm memory</span></span>
+    </div>
+    <div class="row">
+      <span><span class="muted">reading</span> <span class="faint">—</span></span>
+    </div>
+  </Section>
+
+  <Section title="work">
+    <div class="row">
+      <span><span class="item-title">senior product engineer</span> <span class="muted">macrox</span></span>
       <span class="date">2025 —</span>
     </div>
     <div class="row">
-      <span>data scientist <span class="muted">macrox</span></span>
-      <span class="date">2023 — 25</span>
+      <span><span class="item-title">data scientist</span> <span class="muted">macrox</span></span>
+      <span class="date">2023 — 2025</span>
     </div>
-  </section>
+  </Section>
 
-  <section>
-    <div class="label">projects</div>
-    <div class="row"><span>llm memory</span></div>
-    <div class="row"><span>kv cache</span></div>
-  </section>
+  <Section title="projects">
+    <div class="row">
+      <span class="item-title">llm memory</span>
+      <span class="date">wip</span>
+    </div>
+    <div class="row">
+      <span class="item-title">kv cache</span>
+      <span class="date">wip</span>
+    </div>
+  </Section>
 </Base>
